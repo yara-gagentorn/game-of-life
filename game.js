@@ -28,9 +28,6 @@ function createRandomBoard(size) {
 createRandomBoard(size)
 
 function getCoorAround(x, y) {
-  // get current class alive? dead?
-
-  // get array of around
   let around = []
   around.push(`x${x - 1}y${y - 1}`)
   around.push(`x${x}y${y - 1}`)
@@ -43,8 +40,8 @@ function getCoorAround(x, y) {
   return around
 }
 
-let aroundN = getCoorAround(1, 5)
 let counterAlive = 0
+
 function countAlive(around) {
   let state
   let deadAliveArr = around
@@ -64,40 +61,78 @@ function countAlive(around) {
     })
     .reduce((acc, current) => acc + current, 0)
 
-  //console.log(counterAlive)
-  //console.log(deadAliveArr)
   return deadAliveArr
 }
 
-countAlive(aroundN)
+let newStatesArr = []
 
-function getNewBoard() {
+function getNewStates() {
   let around
   let aliveAround
   let isAlive
   let currentCell
+
   // for each element count alive around
   for (let y = 1; y <= size; y++) {
     for (let x = 1; x <= size; x++) {
+      console.log('here')
       currentCell = document.getElementById('x' + x + 'y' + y)
       //console.log(currentCell)
       around = getCoorAround(x, y)
       aliveAround = countAlive(around)
       currentCell.innerHTML = aliveAround
-      console.log(currentCell.classList.contains('alive'))
       isAlive = currentCell.classList.contains('alive')
-      console.log(isAlive)
-      if (isAlive && aliveAround <= 2) {
-        currentCell.classList.remove('alive')
-        currentCell.classList.add('dead')
+      console.log(x, y, isAlive)
+      if (isAlive && aliveAround < 2) {
+        newStatesArr.push(false)
+
+        // currentCell.classList.remove('alive')
+        // currentCell.classList.add('dead')
       }
-      if (isAlive && aliveAround >= 3) {
-        currentCell.classList.remove('alive')
-        currentCell.classList.add('dead')
+      if (isAlive && aliveAround > 3) {
+        newStatesArr.push(false)
+
+        // currentCell.classList.remove('alive')
+        // currentCell.classList.add('dead')
       }
       if (!isAlive && aliveAround === 3) {
-        currentCell.classList.add('alive')
-        currentCell.classList.add('dead')
+        newStatesArr.push(true)
+
+        // currentCell.classList.add('alive')
+        // currentCell.classList.add('dead')
+      }
+      if (isAlive && (aliveAround === 2 || aliveAround === 3)) {
+        newStatesArr.push(true)
+      }
+      if (!isAlive) {
+        newStatesArr.push(false)
+      }
+    }
+  }
+  return newStatesArr
+}
+
+let arr = getNewStates()
+console.log(arr, arr.length)
+
+function getNewBoard(newStatesArr) {
+  // document.getElementById('game-board').innerHTML = ''
+  for (let i = 0; i < newStatesArr.length; i++) {
+    for (let y = 1; y <= size; y++) {
+      newTR = document.createElement('tr')
+      newTR.setAttribute('id', 'row' + y)
+      document.getElementById('game-board').appendChild(newTR)
+      for (let x = 1; x <= size; x++) {
+        newTD = document.createElement('td')
+        newTD.setAttribute('id', 'x' + x + 'y' + y)
+        newTD.innerHTML = 'o'
+        console.log(newStatesArr)
+        if (newStatesArr[i]) {
+          newTD.classList.add('alive')
+        } else {
+          newTD.classList.add('dead')
+        }
+        document.getElementById('row' + y).appendChild(newTD)
       }
     }
   }
@@ -105,4 +140,4 @@ function getNewBoard() {
 
 //getNewBoard()
 
-setInterval(getNewBoard(), 5000)
+//getNewBoard(arr)
