@@ -1,14 +1,22 @@
+/*table {
+  border-collapse: collapse;
+
+}*/
+
 td  {
-  border: 1px solid;
+  border: 0px solid;
   width: 5px;
   height: 5px;
 }
 
 .alive {
-  background-color: blueviolet;
+  background-color:  #317773;
+  
 }
 
-
+.dead {
+  background-color: #E2D1F9;
+}
 
 body{
 }

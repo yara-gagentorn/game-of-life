@@ -1,7 +1,5 @@
-// generate a table
-
-const size = 50
-const array = ['dead', 'alive', 'alive']
+const size = 80
+const array = ['dead', 'alive']
 
 // get random class - alive or dead
 let randomClass = () => {
@@ -17,7 +15,6 @@ function createRandomBoard(size) {
     for (let x = 1; x <= size; x++) {
       newTD = document.createElement('td')
       newTD.setAttribute('id', 'x' + x + 'y' + y)
-      newTD.innerHTML = 'o'
       let newClass = randomClass()
       newTD.classList.add(newClass)
       document.getElementById('row' + y).appendChild(newTD)
@@ -41,7 +38,6 @@ function isExist(x, y) {
 
 function getCoorAround(x, y) {
   let around = []
-  //console.log(x, y)
   if (isExist(x - 1, y - 1)) {
     around.push(`x${x - 1}y${y - 1}`)
   }
@@ -66,7 +62,6 @@ function getCoorAround(x, y) {
   if (isExist(x + 1, y + 1)) {
     around.push(`x${x + 1}y${y + 1}`)
   }
-  //console.log(around, around.length)
   return around
 }
 
@@ -78,16 +73,13 @@ function countAlive(around) {
     .map((elem) => {
       counterAlive = 0
       if (document.getElementById(elem)) {
-        //console.log(state)
         state = document.getElementById(elem).classList.contains('alive')
       }
       if (state === undefined) {
         state = 0
       }
-      //console.log(state)
       if (state) {
         counterAlive = counterAlive + 1
-        //console.log('I am here ', elem, counterAlive)
       }
       return state
     })
@@ -140,9 +132,6 @@ function getNewStates() {
   return newStatesArr
 }
 
-// let arr = getNewStates()
-// console.log(arr, arr.length)
-
 function getNewBoard(newStatesArr) {
   document.getElementById('game-board').innerHTML = ''
   let i = 0
@@ -153,8 +142,6 @@ function getNewBoard(newStatesArr) {
     for (let x = 1; x <= size; x++) {
       newTD = document.createElement('td')
       newTD.setAttribute('id', 'x' + x + 'y' + y)
-      //newTD.innerHTML = 'O'
-      //console.log(newStatesArr)
       if (newStatesArr[i]) {
         i++
         newTD.classList.add('alive')
@@ -176,4 +163,4 @@ function renewBoard() {
 
 //getNewBoard()
 let arr = getNewStates()
-setInterval(renewBoard, 500)
+setInterval(renewBoard, 200)
