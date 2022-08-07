@@ -1,6 +1,6 @@
 // generate a table
 
-const size = 5
+const size = 50
 const array = ['dead', 'alive', 'alive']
 
 // get random class - alive or dead
@@ -113,7 +113,7 @@ function getNewStates() {
       around = getCoorAround(x, y)
       aliveAround = countAlive(around)
       //console.log("mark alive")
-      currentCell.innerHTML = aliveAround
+      //currentCell.innerHTML = aliveAround
       isAlive = currentCell.classList.contains('alive')
       //console.log(x, y, isAlive)
 
@@ -153,7 +153,7 @@ function getNewBoard(newStatesArr) {
     for (let x = 1; x <= size; x++) {
       newTD = document.createElement('td')
       newTD.setAttribute('id', 'x' + x + 'y' + y)
-      newTD.innerHTML = 'O'
+      //newTD.innerHTML = 'O'
       //console.log(newStatesArr)
       if (newStatesArr[i]) {
         i++
@@ -169,11 +169,11 @@ function getNewBoard(newStatesArr) {
 
 function renewBoard() {
   newStatesArr = []
+  console.log('i am here')
   let arr = getNewStates()
-
   getNewBoard(arr)
 }
 
 //getNewBoard()
 let arr = getNewStates()
-//setTimeout(renewBoard(), 5000)
+setInterval(renewBoard, 500)
