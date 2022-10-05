@@ -34,8 +34,6 @@ function isExist(x, y) {
   } else return true
 }
 
-//console.log(isExist(5, 6))
-
 function getCoorAround(x, y) {
   let around = []
   if (isExist(x - 1, y - 1)) {
@@ -99,16 +97,10 @@ function getNewStates() {
   // for each element count alive around
   for (let y = 1; y <= size; y++) {
     for (let x = 1; x <= size; x++) {
-      //console.log('here')
       currentCell = document.getElementById('x' + x + 'y' + y)
-      //console.log(currentCell)
       around = getCoorAround(x, y)
       aliveAround = countAlive(around)
-      //console.log("mark alive")
-      //currentCell.innerHTML = aliveAround
       isAlive = currentCell.classList.contains('alive')
-      //console.log(x, y, isAlive)
-
       if (isAlive && aliveAround < 2) {
         newStatesArr.push(false)
       }
@@ -161,6 +153,5 @@ function renewBoard() {
   getNewBoard(arr)
 }
 
-//getNewBoard()
 let arr = getNewStates()
 setInterval(renewBoard, 200)
